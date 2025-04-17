@@ -1,0 +1,59 @@
+# ------------------------------
+# Root-level (backend) settings
+# ------------------------------
+
+# Node modules e logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs e output
+logs
+*.log
+*.log.*
+
+# Coverage
+coverage/
+.eslintcache
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# MongoDB dumps
+dump/
+
+# ----------------------------------
+# Frontend (inside /frontend folder)
+# ----------------------------------
+
+# Node modules e build outputs
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Env files do frontend (se houver)
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Coverage ou build reports (se aplicável)
+frontend/coverage/
+
+# Editor config (caso use separado)
+frontend/.eslintcache
+frontend/.vscode/
