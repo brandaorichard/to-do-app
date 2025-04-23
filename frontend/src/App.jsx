@@ -46,14 +46,23 @@ function App() {
   const saveEdit = async (id) => {
     try {
       const response = await axios.patch(`/api/todos/${id}`, {
-        text: editedText
-      })
+        text: editedText,
+      });
       setTodos(todos.map((todo) => (todo._id === id ? response.data : todo)));
       setEditingTodo(null);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const deleteTodo = async (id) => {
+    try {
+      await axios.delete(`/api/todos/${id}`);
+      setTodos(todos.filter((todo) => todo._id !== id));
+    } catch (error) {
+      console.log("Error deleting todo:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from gray-50 to-gray-100 flex items-center justify-center p-4">
@@ -96,7 +105,10 @@ function App() {
                         onChange={(e) => setEditedText(e.target.value)}
                       />
                       <div className="flex gap-x-2">
-                        <button onClick={() => saveEdit(todo._id)} className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 cursos-pointer">
+                        <button
+                          onClick={() => saveEdit(todo._id)}
+                          className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 cursos-pointer"
+                        >
                           <MdOutlineDone />
                         </button>
                         <button
@@ -131,7 +143,10 @@ function App() {
                           >
                             <MdModeEditOutline />
                           </button>
-                          <button className="p-2 text-red-500 hover:text-red-700 rounded-lg hover:bg-red-50 duration-200">
+                          <button
+                            onClick={() => deleteTodo(todo._id)}
+                            className="p-2 text-red-500 hover:text-red-700 rounded-lg hover:bg-red-50 duration-200"
+                          >
                             <FaTrash />
                           </button>
                         </div>
