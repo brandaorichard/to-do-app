@@ -9,6 +9,8 @@ import axios from "axios";
 function App() {
   const [newTodo, setNewTodo] = useState("");
   const [todos, setTodos] = useState([]);
+  const [editingTodo, setEditingTodo] = useState(null);
+  const [editedText, setEditedText] = useState("")
 
   const addTodo = async (e) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ function App() {
   const fetchTodos = async () => {
     try {
       const response = await axios.get("/api/todos");
+      console.log(response.data);
       setTodos(response.data)
     } catch (error) {
       console.log(error);
@@ -34,6 +37,11 @@ function App() {
   useEffect(() => {
     fetchTodos();
   }, [])
+
+  const startEditing = (todo) => {
+    setEditingTodo(todo._id)
+    setEditedText(todo.text)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from gray-50 to-gray-100 flex items-center justify-center p-4">
@@ -65,7 +73,31 @@ function App() {
           ) : (
             <div>
               {todos.map((todo) => (
-                <div key={todo._id}>{todo.text}</div>
+                <div key={todo._id}>
+                  {editingTodo === todo._id ? (
+                    <div>
+                      <input type="text" value={editedText} onChange={(e) => setEditedText(e.target.value)}/>
+                      <button>
+                        <MdOutlineDone />
+                      </button>
+                      <button onClick={() => setEditingTodo(null)}>
+                        <IoClose />
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <div>
+                        {todo.text}
+                        <button onClick={() => startEditing(todo)}>
+                          <MdModeEditOutline />
+                        </button>
+                        <button>
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           )}
