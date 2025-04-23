@@ -1,10 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import todoRoutes from "./routes/todo.routes.js";
-import {
-  connectDB
-} from "./config/db.js";
-
+import { connectDB } from "./config/db.js";
 
 const PORT = process.env.PORT || 5000;
 
